@@ -1,19 +1,351 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人博客</title>
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
 
-<meta charset="UTF-8">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<title>Someone's Blog</title>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* 头部样式 */
+        .site-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .site-title {
+            margin-bottom: 10px;
+        }
+
+        .site-nav ul {
+            display: flex;
+            gap: 20px;
+        }
+
+        .site-nav a {
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .site-nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* 主要内容区域 */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 40px;
+            border-radius: 5px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* 关于我部分 */
+        .about-section {
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .profile-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid var(--light-color);
+        }
+
+        .bio {
+            flex: 1;
+        }
+
+        /* 文章部分 */
+        .articles-section {
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-date {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
+
+        .article-title {
+            padding: 15px;
+            font-size: 1.3rem;
+        }
+
+        .article-excerpt {
+            padding: 0 15px 15px;
+            color: var(--text-light);
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            margin: 0 15px 15px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .read-more:hover {
+            background-color: #27ae60;
+        }
+
+        /* 联系表单 */
+        .contact-section {
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto 0;
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* 页脚样式 */
+        .site-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .site-nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">我的个人博客</h1>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#articles">文章</a></li>
+                    <li><a href="#contact">联系我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<h1>Hello, Blog World ~</h1>
+    <main class="container">
+        <section id="home" class="hero">
+            <h2>欢迎来到我的博客</h2>
+            <p>这里记录我的学习笔记、生活感悟和技术分享</p>
+        </section>
 
+        <section id="about" class="about-section">
+            <h2>关于我</h2>
+            <div class="about-content">
+                <img src="https://via.placeholder.com/150" alt="我的头像" class="profile-img">
+                <div class="bio">
+                    <p>你好，我是一名前端开发者，热爱编程和写作。这个博客是我分享知识和想法的地方。</p>
+                    <p>我专注于HTML, CSS, JavaScript和Web开发相关技术。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles" class="articles-section">
+            <h2>最新文章</h2>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-date">2023年5月15日</div>
+                    <h3 class="article-title">HTML5新特性探索</h3>
+                    <p class="article-excerpt">HTML5带来了许多令人兴奋的新特性，如语义化标签、本地存储、Canvas绘图等...</p>
+                    <a href="#" class="read-more">阅读更多</a>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-date">2023年4月28日</div>
+                    <h3 class="article-title">CSS布局技巧</h3>
+                    <p class="article-excerpt">Flexbox和Grid是现代CSS布局的强大工具，掌握它们可以大大提高开发效率...</p>
+                    <a href="#" class="read-more">阅读更多</a>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-date">2023年3月10日</div>
+                    <h3 class="article-title">响应式设计原则</h3>
+                    <p class="article-excerpt">在移动设备普及的今天，响应式设计已成为网站开发的基本要求...</p>
+                    <a href="#" class="read-more">阅读更多</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2>联系我</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">留言</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">发送</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2023 我的个人博客. 保留所有权利.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon">微博</a>
+                <a href="#" class="social-icon">GitHub</a>
+                <a href="#" class="social-icon">Twitter</a>
+            </div>
+        </div>
+    </footer>
 </body>
-
 </html>
